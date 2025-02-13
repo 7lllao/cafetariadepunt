@@ -3,7 +3,7 @@
 
 :root{
     --padding: clamp(.5rem, 2vw, 1rem);
-    --large-font: 25px; line-height: 1.4;
+    --large-font: 25px; line-height: 1.5;
     --medium-font: 40pt;
     --normal-font: 20px;
     --small-font: 10px;
@@ -30,9 +30,9 @@ body {
     background-color: none;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-h1 { font-size: 32px; } /*large font */
+h1 { font-size: var(--normal-font); text-decoration: underline; text-underline-offset: .3em; } /*large font */
 h2 {padding: 0px 12px; font-size: var(--large-font); text-decoration: underline; text-underline-offset: .3em;} /*medium font */
-h3 { font-size: 24px; } /*normal font */
+h3 { font-size: var(--small-font); } /*normal font */
 p { font-size: 18pt; } /* small font */
 small { font-size: 14px; }
 
@@ -178,6 +178,11 @@ html {
 section {
     padding: 10px 0;
     z-index: 1;
+    max-width: 420px;
+    margin: 0 auto;
+    top: 0;
+    background-color: var(--background-color);
+    align-items: center;
 }
 
 html {
@@ -196,10 +201,7 @@ section {
     gap: 10px;
 }
 
-.item {
-    display: flex;  /* Flexbox om naam en prijs naast elkaar te krijgen */
-    justify-content: space-between;  /* Zorg ervoor dat naam en prijs uitgelijnd zijn */
-}
+
 
 /* Prijzenlijst voor secties met 2 kolommen (naam + prijs + omschrijving) */
 .pricelist-two-cols {
@@ -231,36 +233,29 @@ section {
 }
 
 /* Prijzenlijst voor secties met 4 kolommen (naam + prijs + naam + prijs) */
-.pricelist-four-cols {
+.pricelist-three-cols {
     display: grid;
     padding: 8px 12px;
-    grid-template-columns: 1fr 1fr 1fr 1fr; /* Vier kolommen */
+    grid-template-columns: 1fr 1fr 1fr; /* Vier kolommen */
     gap: 10px;
     font-size: var(--normal-font);
 }
 
-.pricelist-four-cols .item {
+.pricelist-three-cols .item {
     display: flex;
     flex-direction: column;
 }
 
-.pricelist-four-cols .item-name {
+.pricelist-three-cols .item-name {
     font-size: var(--normal-font);
     font-weight: bold;
 }
 
-.pricelist-four-cols .item-price {
+.pricelist-three-cols .item-price {
     font-size: var(--normal-font);
 }
 
-/* Extra lettergrootte voor verschillende secties (bijvoorbeeld voor Broodjes) */
-#broodjes .item-name {
-    font-size: 18px; /* Grotere naam voor broodjes */
-}
 
-#ijs .item-price {
-    font-size: 14px; /* Kleinere prijs voor ijs */
-}
 
 .product {
     display: flex;
@@ -270,8 +265,8 @@ section {
 }
 
 .product-name {
-    font-size: 1.2rem;  /* Naam groter */
-    font-weight: bold;
+    font-size: var(--normal-font);  /* Prijs nog groter */
+    padding: 0px 12px;
 }
 
 .product-price {
