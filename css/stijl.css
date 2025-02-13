@@ -112,16 +112,18 @@ html {
     z-index: 0;
     width: 100%;
     margin: 0 auto;
-    height: 12%;
+    height: 8%;
 }
 
 
 /* Sticky Navigatiebalk */
 .navigation {
     position: sticky;
-    top: 7%; /* Gelijk aan de hoogte van de header */
+    align-items: center;
+    top: 6%; /* Gelijk aan de hoogte van de header */
     z-index: 999;
     max-width: var(--max-width-mobiel);
+    background-color: rgba(223,245,229,0.6);
     margin: 0 auto;
     padding: 8px 0;
     overflow-x: auto;
@@ -134,13 +136,16 @@ html {
 .navigation ul {
     display: flex;
     list-style: none;
+    justify-content: space-between;
     background-color: var(--background-color); /* Of een andere kleur naar wens */
     margin: 0;
     padding: 0;
+
 }
 
 .navigation li {
-    margin-right: 3.5px; /* Voorheen 12px, nu minder ruimte */
+    margin-left: auto;
+    margin-right: auto; /* Voorheen 12px, nu minder ruimte */
 }
 
 .navigation::-webkit-scrollbar {
@@ -160,9 +165,7 @@ html {
     transition: background-color 0.3s ease;
 }
 
-.navigation a:hover {
-    text-decoration: underline;
-}
+
 
 /* Cirkel indicator */
 .indicator {
@@ -290,4 +293,43 @@ section {
     .pricelist-four-cols {
         grid-template-columns: 1fr 1fr; /* Zet vier kolommen om naar twee kolommen */
     }
+}
+
+
+@media (max-width: 376px){
+
+    .navigation {
+        top: 8%; /* Gelijk aan de hoogte van de header */
+    }
+
+    .nav-background {
+        height: 9%;
+    }
+
+    
+}
+
+@media (max-width: 345px){
+    :root{
+        --max-width-mobiel: 344px;
+    }
+
+
+    .navigation a {
+        font-size: 11px;
+    }
+    
+    .sticky-footer {
+        position: fixed;
+        margin: 0 auto;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: var(--background-header-color); /* Of een andere kleur naar wens */
+        text-align: center;
+        padding: 12px 0;
+        z-index: 999;
+        box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+    }
+
 }
