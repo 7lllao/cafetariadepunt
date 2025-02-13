@@ -1,0 +1,298 @@
+
+
+
+:root{
+    --padding: clamp(.5rem, 2vw, 1rem);
+    --large-font: 25px; line-height: 1.4;
+    --medium-font: 40pt;
+    --normal-font: 20px;
+    --small-font: 10px;
+    --column-span: 3;
+    --background-color:rgba(223,245,229);
+    --background-header-color: rgba(111,217,142);
+    --color-text:#000;
+    --font-family-sans:"Helvetica", "Verdana", "Arial", "Sans-Serif";
+    --max-width-mobiel: 420px;
+
+    
+   }
+
+
+body {
+    margin: 0;
+    font-family: Helvetica;
+    background-color: var(--background-color)
+}
+.container {
+    max-width: var(--max-width-mobiel);
+    margin: 0 auto;
+    padding-left: 16px;
+    background-color: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+h1 { font-size: 32px; } /*large font */
+h2 {padding: 0px 12px; font-size: var(--large-font); text-decoration: underline; text-underline-offset: .3em;} /*medium font */
+h3 { font-size: 24px; } /*normal font */
+p { font-size: 18pt; } /* small font */
+small { font-size: 14px; }
+
+
+html {
+    font: "Helvetica","Verdana", "Arial", "Sans-Serif";
+    color: var(--color-text);
+    background: var(--background-color);
+  
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+.sticky-header {
+    max-width: 420px;
+    margin: 0 auto;
+    position: sticky;
+    top: 0;
+    background-color: var(--background-header-color);
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+}
+.header-left {
+    font-size: var(--large-font);
+    color: #fff;
+    font-weight: bold;
+}
+.header-right {
+    text-align: right;
+    font-size: var(--small-font);
+    margin-left: 10px;
+}
+.header-address {
+    text-decoration: none;
+    font-weight: bold;
+    color: #fff;
+    line-height: 1.4;
+}
+.header-address:hover {
+    text-decoration: underline;
+}
+
+.sticky-footer {
+    position: sticky;
+    margin: 0 auto;
+    max-width: var(--max-width-mobiel);
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--background-header-color); /* Of een andere kleur naar wens */
+    text-align: center;
+    padding: 12px 0;
+    z-index: 999;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.footer-phone {
+    font-size: var(--normal-font);
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer-phone:hover {
+    text-decoration: underline;
+}
+
+.nav-background {
+    position: fixed;
+    top:0;
+    left:0;
+    background-color: var(--background-color);
+    z-index: 0;
+    width: 100%;
+    margin: 0 auto;
+    height: 12%;
+}
+
+
+/* Sticky Navigatiebalk */
+.navigation {
+    position: sticky;
+    top: 7%; /* Gelijk aan de hoogte van de header */
+    z-index: 999;
+    max-width: var(--max-width-mobiel);
+    margin: 0 auto;
+    padding: 8px 0;
+    overflow-x: auto;
+    white-space: nowrap;
+    height: 40px;
+    -ms-overflow-style: none;  /* Voor Internet Explorer en Edge */
+    scrollbar-width: none;     /* Voor Firefox */
+}
+
+.navigation ul {
+    display: flex;
+    list-style: none;
+    background-color: var(--background-color); /* Of een andere kleur naar wens */
+    margin: 0;
+    padding: 0;
+}
+
+.navigation li {
+    margin-right: 3.5px; /* Voorheen 12px, nu minder ruimte */
+}
+
+.navigation::-webkit-scrollbar {
+    display: none; /* Voor Chrome, Safari en Opera */
+}
+
+.navigation a {
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+    position: center;
+    background-color: rgba(111, 121, 217, 0.7); /* Zachtgrijze achtergrond */
+    padding: 4px 4.2px;
+    border-radius: 8px; /* Afgeronde hoeken */
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.navigation a:hover {
+    text-decoration: underline;
+}
+
+/* Cirkel indicator */
+.indicator {
+    width: 8px;
+    height: 8px;
+    background-color: var(--background-header-color);
+    border-radius: 50%;
+    position: absolute;
+    bottom: 8px; /* 4px onder navigatiebalk */
+    transition: left 0.3s ease;
+}
+
+section {
+    padding: 10px 0;
+    z-index: 1;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+/* Basisinstellingen voor de sectie */
+section {
+    padding: 40px 0;
+}
+
+.pricelist {
+    display: flex;
+    flex-direction: column;  /* Zorg ervoor dat de items onder elkaar staan */
+    gap: 10px;
+}
+
+.item {
+    display: flex;  /* Flexbox om naam en prijs naast elkaar te krijgen */
+    justify-content: space-between;  /* Zorg ervoor dat naam en prijs uitgelijnd zijn */
+}
+
+/* Prijzenlijst voor secties met 2 kolommen (naam + prijs + omschrijving) */
+.pricelist-two-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Twee kolommen */
+    gap: 20px;
+    font-size: var(--normal-font);
+    padding: 8px 12px;
+}
+
+.pricelist-two-cols .item {
+    display: flex;
+    flex-direction: column;
+}
+
+.pricelist-two-cols .item-name {
+    font-size: var(--normal-font);
+    font-weight: bold;
+}
+
+.pricelist-two-cols .item-price {
+    font-size: var(--normal-font);
+    
+}
+
+.pricelist-two-cols .item-description {
+    font-size: var(--small-font);
+    color: #777;
+}
+
+/* Prijzenlijst voor secties met 4 kolommen (naam + prijs + naam + prijs) */
+.pricelist-four-cols {
+    display: grid;
+    padding: 8px 12px;
+    grid-template-columns: 1fr 1fr 1fr 1fr; /* Vier kolommen */
+    gap: 10px;
+    font-size: var(--normal-font);
+}
+
+.pricelist-four-cols .item {
+    display: flex;
+    flex-direction: column;
+}
+
+.pricelist-four-cols .item-name {
+    font-size: var(--normal-font);
+    font-weight: bold;
+}
+
+.pricelist-four-cols .item-price {
+    font-size: var(--normal-font);
+}
+
+/* Extra lettergrootte voor verschillende secties (bijvoorbeeld voor Broodjes) */
+#broodjes .item-name {
+    font-size: 18px; /* Grotere naam voor broodjes */
+}
+
+#ijs .item-price {
+    font-size: 14px; /* Kleinere prijs voor ijs */
+}
+
+.product {
+    display: flex;
+    align-items: center;  /* Zorgt ervoor dat alles netjes uitgelijnd is */
+    justify-content: flex-start; /* De inhoud wordt naar links uitgelijnd */
+    gap: 10px; /* Ruimte tussen de verschillende elementen */
+}
+
+.product-name {
+    font-size: 1.2rem;  /* Naam groter */
+    font-weight: bold;
+}
+
+.product-price {
+    font-size: var(--normal-font);  /* Prijs nog groter */
+    padding: 0px 12px;
+}
+
+.product-description {
+    font-size: 8px;  /* Kleinere omschrijving */
+    color: #777;
+}
+
+
+
+/* Responsief ontwerp voor kleinere schermen */
+@media (max-width: 200px) {
+    .pricelist-two-cols {
+        grid-template-columns: 1fr; /* Zet alles onder elkaar op kleine schermen */
+    }
+    
+    .pricelist-four-cols {
+        grid-template-columns: 1fr 1fr; /* Zet vier kolommen om naar twee kolommen */
+    }
+}
