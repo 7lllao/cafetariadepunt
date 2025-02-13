@@ -6,12 +6,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const headerHeight = document.querySelector('.sticky-header').offsetHeight;
 
     const offset = headerHeight - 10; // Extra 10px voor speling
+    const maxMovement = 7; // Maximum pixels the indicator can move left/right
 
-    const moveIndicatorToLink = (link) => {
+    const moveIndicatorToLink = (link, scrollOffset = 0) => {
         const linkRect = link.getBoundingClientRect();
         const navRect = document.querySelector('.navigation').getBoundingClientRect();
-        const offsetLeft = linkRect.left - navRect.left + linkRect.width / 2 - indicator.offsetWidth / 2;
-        indicator.style.left = `${offsetLeft}px`;
+        const baseOffset = linkRect.left - navRect.left + linkRect.width / 2 - indicator.offsetWidth / 2;
+        
+        // Add subtle movement based on scroll position
+        const movement = (scrollOffset * maxMovement);
+        indicator.style.left = `${baseOffset + movement}px`;
     };
 
     const onScroll = () => {
@@ -21,13 +25,15 @@ document.addEventListener("DOMContentLoaded", function () {
             const rect = section.getBoundingClientRect();
             if (rect.top <= offset && rect.bottom >= offset) {
                 currentSection = section;
+                
+                // Calculate how far through the section we are (-1 to 1)
+                const sectionProgress = (offset - rect.top) / rect.height;
+                const normalizedProgress = Math.max(-1, Math.min(1, (sectionProgress * 2) - 1));
+                
+                const currentLink = document.querySelector(`.navigation a[href="#${section.id}"]`);
+                if (currentLink) moveIndicatorToLink(currentLink, normalizedProgress);
             }
         });
-
-        if (currentSection) {
-            const currentLink = document.querySelector(`.navigation a[href="#${currentSection.id}"]`);
-            if (currentLink) moveIndicatorToLink(currentLink);
-        }
     };
 
     // Init indicator position
