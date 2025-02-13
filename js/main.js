@@ -10,23 +10,56 @@ document.addEventListener("DOMContentLoaded", function () {
     const sectionTransitionThreshold = 0.8;
     let isClickTransition = false;
 
+    // Add these variables for background animation
+    const indicatorColor = getComputedStyle(indicator).backgroundColor;
+    const originalButtonColor = getComputedStyle(navLinks[0]).backgroundColor;
+    
+    // Function to check if indicator overlaps with a nav button
+    const checkIndicatorOverlap = (link) => {
+        const indicatorRect = indicator.getBoundingClientRect();
+        const linkRect = link.getBoundingClientRect();
+        
+        // Calculate the overlap threshold (e.g., 50% overlap)
+        const overlapThreshold = indicatorRect.width * 0.5;
+        
+        const indicatorCenter = indicatorRect.left + (indicatorRect.width / 2);
+        const linkCenter = linkRect.left + (linkRect.width / 2);
+        
+        return Math.abs(indicatorCenter - linkCenter) < overlapThreshold;
+    };
+
+    // Function to update button backgrounds
+    const updateButtonBackgrounds = () => {
+        navLinks.forEach(link => {
+            const isOverlapping = checkIndicatorOverlap(link);
+            
+            if (isOverlapping) {
+                link.style.transition = 'background-color 0.3s ease';
+                link.style.backgroundColor = indicatorColor;
+            } else {
+                link.style.transition = 'background-color 0.3s ease';
+                link.style.backgroundColor = originalButtonColor;
+            }
+        });
+    };
+
     const moveIndicatorToLink = (link, scrollOffset = 0) => {
         const linkRect = link.getBoundingClientRect();
         const navRect = document.querySelector('.navigation').getBoundingClientRect();
         const baseOffset = linkRect.left - navRect.left + linkRect.width / 2 - indicator.offsetWidth / 2;
         
-        // If it's the last nav item (ijs) or if we're in click transition, keep it centered
         if (link === navLinks[navLinks.length - 1] || isClickTransition) {
             indicator.style.left = `${baseOffset}px`;
         } else {
-            // Add subtle movement based on scroll position
             const movement = (scrollOffset * maxMovement);
             indicator.style.left = `${baseOffset + movement}px`;
         }
+
+        // Update button backgrounds after indicator movement
+        requestAnimationFrame(updateButtonBackgrounds);
     };
 
     const onScroll = () => {
-        // Reset click transition flag when user starts scrolling
         isClickTransition = false;
         
         const viewportCenter = window.scrollY + (window.innerHeight / 2);
@@ -64,6 +97,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
+    // Add transition to indicator
+    indicator.style.transition = 'left 0.3s ease';
+
     // Init indicator position
     moveIndicatorToLink(navLinks[0]);
 
@@ -80,8 +116,6 @@ document.addEventListener("DOMContentLoaded", function () {
     navLinks.forEach(link => {
         link.addEventListener('click', function (e) {
             e.preventDefault();
-
-            // Set click transition flag
             isClickTransition = true;
 
             const targetId = this.getAttribute('href').substring(1);
@@ -94,7 +128,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     behavior: 'smooth'
                 });
 
-                // Center the indicator immediately on click
                 moveIndicatorToLink(link, 0);
             }
         });
