@@ -6,7 +6,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const headerHeight = document.querySelector('.sticky-header').offsetHeight;
 
     const offset = headerHeight - 10; // Extra 10px voor speling
-    const maxMovement = 7; // Maximum pixels the indicator can move left/right
+    const maxMovement = 5; // Maximum pixels the indicator can move left/right
+    const sectionTransitionThreshold = .9; // When to switch to next section (80%)
 
     const moveIndicatorToLink = (link, scrollOffset = 0) => {
         const linkRect = link.getBoundingClientRect();
@@ -19,21 +20,42 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     const onScroll = () => {
-        let currentSection = null;
+        const viewportCenter = window.scrollY + (window.innerHeight / 2);
+        let activeSection = null;
+        let minDistance = Infinity;
 
+        // Find the section closest to the viewport center
         sections.forEach(section => {
             const rect = section.getBoundingClientRect();
-            if (rect.top <= offset && rect.bottom >= offset) {
-                currentSection = section;
-                
-                // Calculate how far through the section we are (-1 to 1)
-                const sectionProgress = (offset - rect.top) / rect.height;
-                const normalizedProgress = Math.max(-1, Math.min(1, (sectionProgress * 2) - 1));
-                
-                const currentLink = document.querySelector(`.navigation a[href="#${section.id}"]`);
-                if (currentLink) moveIndicatorToLink(currentLink, normalizedProgress);
+            const sectionCenter = section.offsetTop + (rect.height / 2);
+            const distance = Math.abs(viewportCenter - sectionCenter);
+            
+            if (distance < minDistance) {
+                minDistance = distance;
+                activeSection = section;
             }
         });
+
+        if (activeSection) {
+            const rect = activeSection.getBoundingClientRect();
+            const progress = (offset - rect.top) / rect.height;
+
+            // If we're past the threshold and there's a next section, switch to it
+            if (progress > sectionTransitionThreshold && activeSection.nextElementSibling) {
+                const nextSection = activeSection.nextElementSibling;
+                const nextLink = document.querySelector(`.navigation a[href="#${nextSection.id}"]`);
+                if (nextLink) {
+                    moveIndicatorToLink(nextLink, -1); // Start at the beginning of the next section
+                }
+            } else {
+                // Calculate progress for current section
+                const normalizedProgress = Math.max(-1, Math.min(1, (progress * 2) - 1));
+                const currentLink = document.querySelector(`.navigation a[href="#${activeSection.id}"]`);
+                if (currentLink) {
+                    moveIndicatorToLink(currentLink, normalizedProgress);
+                }
+            }
+        }
     };
 
     // Init indicator position
@@ -56,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     behavior: 'smooth'
                 });
 
-                // Na het scrollen updaten we handmatig de indicator (voor als je bijv. snel klikt)
+                // Na het scrollen updaten we handmatig de indicator
                 setTimeout(() => moveIndicatorToLink(link), 300);
             }
         });
