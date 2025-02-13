@@ -115,7 +115,19 @@ html {
     height: 8%;
 }
 
+.spacer {
+    height: var(--normal-font);font-weight: bold; /* Of een andere hoogte naar wens */
+    }
+    .section-title {
+        font-size: var(--normal-font);
+        font-weight: bold;
+        text-decoration: underline;
+        grid-column: span 1; /* Of 1, afhankelijk van je gewenste breedte */
+        margin-top: 10px;
+      }
+      
 
+  
 /* Sticky Navigatiebalk */
 .navigation {
     position: sticky;
@@ -164,6 +176,8 @@ html {
     display: inline-block;
     transition: background-color 0.3s ease;
 }
+
+
 
 
 
@@ -264,7 +278,7 @@ section {
     display: flex;
     align-items: center;  /* Zorgt ervoor dat alles netjes uitgelijnd is */
     justify-content: flex-start; /* De inhoud wordt naar links uitgelijnd */
-    gap: 10px; /* Ruimte tussen de verschillende elementen */
+    gap: 1%px; /* Ruimte tussen de verschillende elementen */
 }
 
 .product-name {
